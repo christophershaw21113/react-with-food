@@ -1,0 +1,236 @@
+body {
+    width: 1000px;
+    margin: 0px auto;
+    background: #d1d7db;
+  background-repeat: no-repeat;
+
+  }
+  
+  
+  .App {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(29, 22, 22);
+  
+    padding: 25px 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  form {
+  
+    width: 600px;
+    display: flex;
+
+    align-items: center;
+    text-align: center;
+  }
+  label {
+    margin-bottom: 5px;
+  }
+  input[type=text], input[type=number] {
+    padding: 10px;
+    width: 200px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+  }
+  input[type=checkbox] {
+    margin-bottom: -10px;
+    margin-right: 10px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    border: 2px solid gray;
+    border-radius: 3px;
+    outline: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  input[type="checkbox"]:checked {
+    background-color: gray;
+  }
+  
+  
+  .style-h1-p h1 {
+    margin-bottom: 5px;
+  }
+  .style-h1-p {
+    text-align: center;
+   
+  }
+  
+  /* store directory */
+  
+  h1 {
+    margin-bottom: -5px;
+    color: rgb(29, 15, 15);
+  }
+  .store-paragraph {
+    margin-bottom: 20px;
+  }
+  
+  h1, .store-paragraph, .my-link {
+    text-align: center;
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: center;
+  }
+  
+  tr > th {
+    font-size: 18px;
+    font-variant: small-caps;
+  }
+  
+  .directory-body:nth-child(odd) {
+    background-color: transparent;
+  }
+  .directory-body:nth-child(even) {
+    background-color: #273d4b;
+  }
+  
+  .store-link {
+    text-transform: capitalize;
+    text-decoration: none;
+    border-bottom: 2px solid grey;
+    padding-bottom: 4px;
+    color: white;
+  }
+  
+  .store-link:hover {
+    text-transform: capitalize;
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 5px solid white;
+    color: white;
+  }
+  
+  .open-store {
+    color: green;
+  }
+  .closed-store {
+    color: red;
+  }
+  
+  .my-link {
+  color: grey;
+  }
+  
+  .delete-btn {
+    background-color: #C70000;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    padding: 10px 15px;
+    margin: 5px 0 0 8px;
+  }
+  .delete-btn:hover {
+    background-color: #e37f7f;
+    padding: 10px 15px;
+  }
+  .new-store{
+    text-align: center;
+    background-color: whitesmoke;
+    padding: 10px;
+    width: 200px;
+    margin-top: 15px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  
+  .new-store:hover{
+    text-align: center;
+    background-color: #36454F;
+    padding: 10px;
+    width: 200px;
+    margin-top: 15px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+  }
+  
+  .submit-btn {
+    text-align: center;
+    background-color: whitesmoke;
+    padding: 10px;
+    width: 250px;
+    margin-left: 25%;
+    margin-top: 15px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .submit-link {
+    text-decoration: none;
+    color: black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    text-transform: uppercase;
+  
+  }
+  
+  .submit-link:hover {
+    text-decoration: none;
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    text-transform: uppercase;
+  
+  }
+  .submit-btn:hover {
+    text-align: center;
+    background-color: #245474;
+    padding: 10px;
+    width: 250px;
+    margin-left: 25%;
+    margin-top: 15px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .stores-id h1 {
+    margin-bottom: 10px;
+  }
+  .stores-id {
+   
+    width: 500px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  
+  }
+  
+  .stores-id button {
+    width: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin-left: 150px;
+    color: #1a1b1c;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .edit-store {
+  color: #2a3d4a;
+  text-decoration: none;
+  }
+  .store-update p{
+    text-align: center;
+    
+  }
+  .store-update .my-link{
+    text-align: center;
+    
+  }
