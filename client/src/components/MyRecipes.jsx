@@ -1,11 +1,14 @@
+import VerticalDashBoard from './VerticalDashBoard'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {Link, useParams} from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardImage, MDBRipple, MDBListGroup, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import img from '../img/image-coming-soon.jpeg'
 
-const Card = (props) => {
-  const {id} = useParams()
+
+const MyRecipes = (props) => {
+  const {removeRecipeFromDom} = props;
+  const { id } = useParams();
   const [searchInput, setSearchInput] = useState('');
   const [selectedRecipeIndex, setSelectedRecipeIndex] = useState(null);
   const [recipes, setRecipes] = useState([]);
@@ -21,6 +24,20 @@ const Card = (props) => {
         console.log(err);
       });
   }, []);
+
+  const deleteRecipe = (recipeId) => {
+    axios.delete(`http://localhost:8000/api/recipes/${recipeId}`)
+        .then(res => {
+          //Removing the delete recipe from state!
+          setRecipes((previousRecipes) =>
+        previousRecipes.filter((recipe) => recipe._id !== recipeId)
+      );
+            removeRecipeFromDom(recipeId);
+
+        })
+        .catch(err => console.log(err))
+}
+
 
   const toggleDescription = (index) => {
     setSelectedRecipeIndex((prevIndex) => (prevIndex === index ? null : index));
@@ -53,12 +70,12 @@ const Card = (props) => {
     card: {
       boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
       transition: '0.3s',
-      width: '100%',
+      width: '350px',
       marginBottom: '15px',
-      marginTop: '25px',
+      marginTop: '30px',
       marginLeft: '20px',
       marginRight: '20px',
-     
+
     },
     cardHover: {
       boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
@@ -67,9 +84,18 @@ const Card = (props) => {
       padding: '2px 16px',
       width: '100%',
     },
+    buttonContainer: {
+      display: 'flex',
+      justifyContent: 'space-around',
+      marginBottom: '10px'
+    },
   };
 
+
   return (
+    <div style={{ display: 'flex' }}>
+      <VerticalDashBoard />
+    
       <div>
         <input
           type="text"
@@ -77,12 +103,13 @@ const Card = (props) => {
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
         />
+  <h1 style={{textAlign:'center'}}>My Recipes</h1>
         <MDBRow>
           {filteredRecipes.map((recipe, index) => (
-            <MDBCol sm="12" md="6" lg="4" xl={'3'} key={index}>
+            <MDBCol sm="12" md="6" lg="6" key={index}>
               <MDBCard style={styleCard.card}>
                 <MDBRipple rippleColor="light" rippleTag="div" className="bg-image hover-overlay">
-                 <Link to={`/recipes/${id}`}><MDBCardImage src={img} width='100%' alt="Recipe" /></Link> 
+                  <Link to={`/recipes/${id}`}><MDBCardImage src={img} width='100%' alt="Recipe" /></Link>
                 </MDBRipple>
                 <MDBCardBody style={styleCard.container}>
                   <MDBCardTitle>
@@ -98,16 +125,25 @@ const Card = (props) => {
                     <li>Cook: {recipe.recipeInfo.cookTime} mins</li>
                   </MDBListGroup>
                   <MDBCardText>{getDescriptionPreview(recipe, index)}</MDBCardText>
-                  <button onClick={() => toggleDescription(index)}>
-                    {selectedRecipeIndex === index ? 'Show Less' : 'View More'}
-                  </button>
+                  {selectedRecipeIndex === index ? (
+                    <div style={styleCard.buttonContainer}>
+                      <button onClick={() => toggleDescription(index)}>Show Less</button>
+                      <button><Link to={`/recipes/myrecipes/${recipe._id}`}>Edit</Link></button>
+                      <button onClick={() => deleteRecipe(recipe._id)}>Delete</button>
+                    </div>
+                  ) : (
+                    <div style={{display: 'flex', marginBottom: '10px'}}>
+                    <button onClick={() => toggleDescription(index)}>View More</button>
+                    </div>
+                  )}
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
           ))}
         </MDBRow>
       </div>
+    </div>
   );
-};
+}
 
-export default Card;
+export default MyRecipes;

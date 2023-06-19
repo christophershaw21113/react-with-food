@@ -18,11 +18,32 @@ const NewRecipe = () => {
     directions: [],
     description: '',
   });
+
+ const [isFormIncomplete, setIsFormIncomplete] = useState(false)
   
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('submit works!');
+
+// Check for form completion
+if (
+  !addRecipe.name ||
+  !addRecipe.recipeInfo.level ||
+  !addRecipe.recipeInfo.prepTime ||
+  !addRecipe.recipeInfo.cookTime ||
+  !addRecipe.recipeInfo.yield ||
+  !addRecipe.recipeInfo.totalTime ||
+  addRecipe.ingredients.length === 0 ||
+  addRecipe.directions.length === 0 ||
+  !addRecipe.description
+) {
+  setIsFormIncomplete(true);
+  return;
+}
+
+
+
     axios
       .post('http://localhost:8000/api/recipes/add/', addRecipe) // Send addRecipe directly as the request payload
       .then((res) => {
@@ -47,6 +68,7 @@ const NewRecipe = () => {
       })
       .catch((err) => {
         console.log(err)
+    
        
       })
       ;
@@ -57,21 +79,26 @@ const NewRecipe = () => {
       <VerticalDashBoard />
     <div>
      <h1 style={{textAlign: 'center'}}>New Recipe</h1>
-     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', }}>
-      <form onSubmit={handleSubmit} encType='multipart/form-data'>
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px'}}>
-          <div>
-            <input style={{border: 'solid 1px #000', borderRadius: '0px',  width: '220px',}}
+  
+      <form style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', }} onSubmit={handleSubmit} encType='multipart/form-data'>
+      <div className='row justify-content-space-between'>
+      <div className='col-md-8'>
+      {(addRecipe.name.length < 3 && addRecipe.name.length > 1) ?<p>Name must be at least 3 characters</p> : null}
+            <input style={{border: 'solid 1px #000', borderRadius: '0px',  width: '300px',}}
+              className='form-control'
               type='text'
               name='name'
               placeholder='Name'
               value={addRecipe.name}
               onChange={(e) => setAddRecipe({ ...addRecipe, name: e.target.value })}/>
-
+              
+              
             <textarea
+             className='form-control'
               style={{
-                width: '220px',
-                marginTop: '10px',
+               width: '300px',
+               marginTop: '10px',
+               borderRadius: '0px',
                 border: 'solid 1px #000',
                 padding: '5px',
               }}
@@ -89,8 +116,9 @@ const NewRecipe = () => {
             />
 
             <textarea
+             className='form-control'
               style={{
-                width: '220px',
+                width: '300px',
                 marginTop: '10px',
                 borderRadius: '0px',
                 border: 'solid 1px #000',
@@ -111,7 +139,8 @@ const NewRecipe = () => {
           </div>
 
           <div style={{display: 'flex', flexDirection: 'column'}}>
-            <input style={{border: 'solid 1px #000',  borderRadius: '0px', width: '220px',}}
+            <input style={{border: 'solid 1px #000',  borderRadius: '0px',  width: '300px',}}
+              className='form-control'
               type='text'
               name='level'
               placeholder='Level (Easy, Medium, Hard)'
@@ -127,11 +156,12 @@ const NewRecipe = () => {
               }
             />
 
-            <input style={{border: 'solid 1px #000',  borderRadius: '0px', width: '220px',}}
+            <input style={{border: 'solid 1px #000',  borderRadius: '0px', width: '300px',}}
+              className='form-control'
               type='text'
               name='preptime'
               placeholder='Prep Time (mins)'
-              value={addRecipe.recipeInfo.prepTime}
+              value={addRecipe.recipeInfo.prepTime || ''}
               onChange={(e) =>
                 setAddRecipe({
                   ...addRecipe,
@@ -144,11 +174,12 @@ const NewRecipe = () => {
             />
 
 
-             <input style={{border: 'solid 1px #000',  borderRadius: '0px', width: '220px',}}
+             <input style={{border: 'solid 1px #000',  borderRadius: '0px', width: '300px',}}
+               className='form-control'
               type='text'
               name='cooktime'
               placeholder='Cook Time (mins)'
-              value={addRecipe.recipeInfo.cookTime}
+              value={addRecipe.recipeInfo.cookTime || ''}
               onChange={(e) =>
                 setAddRecipe({
                   ...addRecipe,
@@ -159,11 +190,12 @@ const NewRecipe = () => {
                 })
               }
             />
-            <input style={{border: 'solid 1px #000',  borderRadius: '0px', width: '220px',}}
+            <input style={{border: 'solid 1px #000',  borderRadius: '0px',width: '300px',}}
+              className='form-control'
               type='text'
               name='yield'
               placeholder='Yield (Serves #)'
-              value={addRecipe.recipeInfo.yield}
+              value={addRecipe.recipeInfo.yield || ''}
               onChange={(e) =>
                 setAddRecipe({
                   ...addRecipe,
@@ -174,11 +206,11 @@ const NewRecipe = () => {
                 })
               }
             />
-               <input style={{border: 'solid 1px #000',  borderRadius: '0px', width: '220px',}}
+               <input style={{border: 'solid 1px #000',  borderRadius: '0px', width: '300px',}}
               type='text'
               name='totalTime'
               placeholder='Total Time (mins)'
-              value={addRecipe.recipeInfo.totalTime}
+              value={addRecipe.recipeInfo.totalTime || ''}
               onChange={(e) =>
                 setAddRecipe({
                   ...addRecipe,
@@ -192,7 +224,7 @@ const NewRecipe = () => {
 
 <textarea
               style={{
-                width: '220px',
+                width: '300px',
                 marginTop: '10px',
                 
                 border: 'solid 1px #000',
@@ -208,14 +240,13 @@ const NewRecipe = () => {
               }
             />
           <button className='new-store' type='submit'>Add New Recipe</button>
+          {isFormIncomplete && <p>All fields are required</p>}
           </div>
         </div>
       </form>
    </div>
     </div>
 
-    </div>
-  
   );
 };
 
